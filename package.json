@@ -1,0 +1,33 @@
+{
+  "name": "gulp-css-mask-vendors",
+  "version": "1.0.0",
+  "description": "Mask css vendors identity",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "gulpplugin",
+    "mask",
+    "css",
+    "vendor"
+  ],
+  "author": "Maurício Marinho <maucrvlh@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@types/gulp-util": "^3.0.31",
+    "@types/jsdom": "^11.0.2",
+    "@types/node": "^8.0.44",
+    "@types/through2": "^2.0.33",
+    "gulp-dom": "^0.9.17",
+    "gulp-util": "^3.0.8",
+    "jsdom": "^11.2.0",
+    "through2": "^2.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^2.5.3"
+  }
+}
