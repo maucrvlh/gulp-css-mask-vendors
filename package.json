@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Mask css vendors identity",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maucrvlh/gulp-css-mask-vendors.git"
+  },
   "directories": {
     "test": "test"
   },
