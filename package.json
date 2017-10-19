@@ -1,6 +1,6 @@
 {
   "name": "gulp-css-mask-vendors",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mask css vendors identity",
   "main": "dist/index.js",
   "repository": {

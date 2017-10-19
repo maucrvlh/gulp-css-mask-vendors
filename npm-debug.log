@@ -1,0 +1,120 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/mauricio/dev/env/nodejs/sdk/node-v8.5.0-linux-x64/bin/node',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@3.10.8
+3 info using node@v8.5.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/home/mauricio/dev/repos/gulp-css-mask-vendors@github.com/gulp-css-mask-vendors',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /home/mauricio/.npm/gulp-css-mask-vendors/1.0.0/package.tgz not in flight; packing
+9 verbose correctMkdir /home/mauricio/.npm correctMkdir not in flight; initializing
+10 info lifecycle gulp-css-mask-vendors@1.0.0~prepublish: gulp-css-mask-vendors@1.0.0
+11 silly lifecycle gulp-css-mask-vendors@1.0.0~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/home/mauricio/.npm/gulp-css-mask-vendors/1.0.0/package.tgz',
+12 verbose tar pack   '/home/mauricio/dev/repos/gulp-css-mask-vendors@github.com/gulp-css-mask-vendors' ]
+13 verbose tarball /home/mauricio/.npm/gulp-css-mask-vendors/1.0.0/package.tgz
+14 verbose folder /home/mauricio/dev/repos/gulp-css-mask-vendors@github.com/gulp-css-mask-vendors
+15 verbose addLocalTarball adding from inside cache /home/mauricio/.npm/gulp-css-mask-vendors/1.0.0/package.tgz
+16 verbose correctMkdir /home/mauricio/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd gulp-css-mask-vendors@1.0.0
+18 verbose afterAdd /home/mauricio/.npm/gulp-css-mask-vendors/1.0.0/package/package.json not in flight; writing
+19 verbose correctMkdir /home/mauricio/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /home/mauricio/.npm/gulp-css-mask-vendors/1.0.0/package/package.json written
+21 silly publish { name: 'gulp-css-mask-vendors',
+21 silly publish   version: '1.0.0',
+21 silly publish   description: 'Mask css vendors identity',
+21 silly publish   main: 'dist/index.js',
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+https://github.com/maucrvlh/gulp-css-mask-vendors.git' },
+21 silly publish   directories: { test: 'test' },
+21 silly publish   scripts: { test: 'mocha' },
+21 silly publish   keywords: [ 'gulpplugin', 'mask', 'css', 'vendor' ],
+21 silly publish   author: { name: 'Maurício Marinho', email: 'maucrvlh@gmail.com' },
+21 silly publish   license: 'ISC',
+21 silly publish   dependencies:
+21 silly publish    { '@types/gulp-util': '^3.0.31',
+21 silly publish      '@types/jsdom': '^11.0.2',
+21 silly publish      '@types/node': '^8.0.44',
+21 silly publish      '@types/through2': '^2.0.33',
+21 silly publish      'gulp-dom': '^0.9.17',
+21 silly publish      'gulp-util': '^3.0.8',
+21 silly publish      jsdom: '^11.2.0',
+21 silly publish      through2: '^2.0.3' },
+21 silly publish   devDependencies: { typescript: '^2.5.3' },
+21 silly publish   readme: '<h1 align="center">Gulp CSS Mask Vendors</h1>\n\n---\n\n:fire: Need hide CSS vendors names/ids? This plugin is 4u. ;)\n## Warning\nSince this plugin changes stylesheet links references and libraries filenames and paths, you <strong>must</strong> use it in builded files (thouse ones in /dist or /build, for instance).\n\n## Installation\n```\nnpm install gulp-css-mask-vendors --save-dev\n```\n## API\n```javascript\ngulpCssMaskVendors(options, callback(vendorsList))\n```\n- Options\n```\n{\n\tbase: string, // build path, default \'.\'. obs.: this path will be ignored when rewriting the html\n    log: boolean // if it should log events or no\n}\n```\n- callback(vendorsList)\n\nReturns a list of masked vendors.\n## Example\nAssuming a project structure like\n```\n├── dist\n│   └── libs\n│   │   ├── x\n│   │   ├── y\n│   │   └── z\n|   └── index.html\n└── src\n│   └── libs\n│   │   ├── x\n│   │   ├── y\n│   │   └── z\n|   └── index.html\n```\n### index.html (in dist path)\n```html\n<html>\n\t<head>\n        <title>gulpCssMaskVendors</title>\n        <link rel="stylesheet" type="text/css" href="dist/libs/x/sheet/x.css">\n        <link rel="stylesheet" type="text/css" href="dist/libs/y/dist/css/y.css">\n        <link rel="stylesheet" type="text/css" href="dist/libs/z/z.css">\n        <link href="https://fonts.googleapis.com/css?family=Julius+Sans+One|Enriqueta" rel="stylesheet">\n    </head>\n\t<body></body>\n</html>\n```\n\n### gulpfile.js\n```javascript\nconst gulpCssMaskVendors = require(\'gulp-css-mask-vendors\');\nconst vendors = [];\ngulp.task(\'maskCssVendors\', function() {\n    return gulp.src(\'dist/index.html\')\n        .pipe(gulpCssMaskVendors({ base: \'dist\', log: true }, function(masked) {\n            vendors = masked;\n        }))\n        .pipe(gulp.dest(\'dist\'));\n});\n```\n### Result\n#### Log\n```\n✔  libs/x/sheet/x.css ⇢ libs/472821985/sheet/472821985.css\n✔  libs/y/dist/css/y.css ⇢ libs/324623775/dist/css/324623775.css\n✔  libs/z/z.css ⇢ libs/377532462/377532462.css\n```\n\n#### Project tree \n```\n├── dist\n│   └── libs\n│   │   ├── 472821985\n│   │   │   └── sheet\n│   │   │       └── 472821985.css\n│   │   ├── 324623775\n│   │   │   └── dist\n│   │   │       └── css\n│   │   │           └── 324623775.css\n│   │   └── 377532462\n│   │   │   └── 377532462.css\n|   └── index.html\n└── src\n│   └── libs\n│   │   ├── x\n│   │   ├── y\n│   │   └── z\n|   └── index.html\n```\n#### Dist html pointing to masked libs (base path ommitted)\n```html\n<html>\n\t<head>\n        <title>gulpCssMaskVendors</title>\n        <link rel="stylesheet" type="text/css" href="libs/472821985/sheet/472821985.css">\n        <link rel="stylesheet" type="text/css" href="libs/324623775/css/324623775.css">\n        <link rel="stylesheet" type="text/css" href="libs/377532462/377532462.css">\n        <link href="https://fonts.googleapis.com/css?family=Julius+Sans+One|Enriqueta" rel="stylesheet">\n    </head>\n\t<body></body>\n</html>\n```\n## License\nMIT\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: 'aa2b4eed0831bd785f1a21bbaaa8463032a760e9',
+21 silly publish   bugs: { url: 'https://github.com/maucrvlh/gulp-css-mask-vendors/issues' },
+21 silly publish   homepage: 'https://github.com/maucrvlh/gulp-css-mask-vendors#readme',
+21 silly publish   _id: 'gulp-css-mask-vendors@1.0.0',
+21 silly publish   _shasum: '1b2316fa1aaa6bf49b935d1e5b5b4d198515a882',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name gulp-css-mask-vendors
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry data Result {
+26 silly mapToRegistry   raw: 'gulp-css-mask-vendors',
+26 silly mapToRegistry   scope: null,
+26 silly mapToRegistry   escapedName: 'gulp-css-mask-vendors',
+26 silly mapToRegistry   name: 'gulp-css-mask-vendors',
+26 silly mapToRegistry   rawSpec: '',
+26 silly mapToRegistry   spec: 'latest',
+26 silly mapToRegistry   type: 'tag' }
+27 silly mapToRegistry uri https://registry.npmjs.org/gulp-css-mask-vendors
+28 verbose publish registryBase https://registry.npmjs.org/
+29 silly publish uploading /home/mauricio/.npm/gulp-css-mask-vendors/1.0.0/package.tgz
+30 verbose request uri https://registry.npmjs.org/gulp-css-mask-vendors
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 10:09:09
+33 verbose request using bearer token for auth
+34 verbose request id 6af076cea407f5cb
+35 http request PUT https://registry.npmjs.org/gulp-css-mask-vendors
+36 http 403 https://registry.npmjs.org/gulp-css-mask-vendors
+37 verbose headers { 'content-type': 'application/json',
+37 verbose headers   'cache-control': 'max-age=300',
+37 verbose headers   'content-length': '91',
+37 verbose headers   'accept-ranges': 'bytes',
+37 verbose headers   date: 'Thu, 19 Oct 2017 14:08:10 GMT',
+37 verbose headers   via: '1.1 varnish',
+37 verbose headers   connection: 'close',
+37 verbose headers   'x-served-by': 'cache-gru17121-GRU',
+37 verbose headers   'x-cache': 'MISS',
+37 verbose headers   'x-cache-hits': '0',
+37 verbose headers   'x-timer': 'S1508422090.525951,VS0,VE915',
+37 verbose headers   vary: 'Accept-Encoding, Accept' }
+38 verbose request invalidating /home/mauricio/.npm/registry.npmjs.org/gulp-css-mask-vendors on PUT
+39 error publish Failed PUT 403
+40 verbose stack Error: You cannot publish over the previously published version 1.0.0. : gulp-css-mask-vendors
+40 verbose stack     at makeError (/home/mauricio/dev/env/nodejs/sdk/node-v6.9.0-linux-x64/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+40 verbose stack     at CachingRegistryClient.<anonymous> (/home/mauricio/dev/env/nodejs/sdk/node-v6.9.0-linux-x64/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+40 verbose stack     at Request._callback (/home/mauricio/dev/env/nodejs/sdk/node-v6.9.0-linux-x64/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+40 verbose stack     at Request.self.callback (/home/mauricio/dev/env/nodejs/sdk/node-v6.9.0-linux-x64/lib/node_modules/npm/node_modules/request/request.js:187:22)
+40 verbose stack     at emitTwo (events.js:125:13)
+40 verbose stack     at Request.emit (events.js:213:7)
+40 verbose stack     at Request.<anonymous> (/home/mauricio/dev/env/nodejs/sdk/node-v6.9.0-linux-x64/lib/node_modules/npm/node_modules/request/request.js:1044:10)
+40 verbose stack     at emitOne (events.js:115:13)
+40 verbose stack     at Request.emit (events.js:210:7)
+40 verbose stack     at IncomingMessage.<anonymous> (/home/mauricio/dev/env/nodejs/sdk/node-v6.9.0-linux-x64/lib/node_modules/npm/node_modules/request/request.js:965:12)
+41 verbose statusCode 403
+42 verbose pkgid gulp-css-mask-vendors
+43 verbose cwd /home/mauricio/dev/repos/gulp-css-mask-vendors@github.com/gulp-css-mask-vendors
+44 error Linux 4.4.0-38-generic
+45 error argv "/home/mauricio/dev/env/nodejs/sdk/node-v8.5.0-linux-x64/bin/node" "/usr/bin/npm" "publish"
+46 error node v8.5.0
+47 error npm  v3.10.8
+48 error code E403
+49 error You cannot publish over the previously published version 1.0.0. : gulp-css-mask-vendors
+50 error If you need help, you may report this error at:
+50 error     <https://github.com/npm/npm/issues>
+51 verbose exit [ 1, true ]
