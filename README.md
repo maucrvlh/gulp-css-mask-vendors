@@ -17,7 +17,7 @@ gulpCssMaskVendors(options, callback(vendorsList))
 - Options
 ```
 {
-	base: string, // build path, default '.'
+	base: string, // build path, default '.'. obs.: this path will be ignored when rewriting the html
     log: boolean // if it should log events or no
 }
 ```
@@ -66,6 +66,47 @@ gulp.task('maskCssVendors', function() {
         .pipe(gulp.dest('dist'));
 });
 ```
+### Result
+#### Log
+```
+✔  libs/x/sheet/x.css ⇢ libs/472821985/sheet/472821985.css
+✔  libs/y/dist/css/y.css ⇢ libs/324623775/dist/css/324623775.css
+✔  libs/z/z.css ⇢ libs/377532462/377532462.css
+```
 
+#### Project tree 
+```
+├── dist
+│   └── libs
+│   │   ├── 472821985
+│   │   │   └── sheet
+│   │   │       └── 472821985.css
+│   │   ├── 324623775
+│   │   │   └── dist
+│   │   │       └── css
+│   │   │           └── 324623775.css
+│   │   └── 377532462
+│   │   │   └── 377532462.css
+|   └── index.html
+└── src
+│   └── libs
+│   │   ├── x
+│   │   ├── y
+│   │   └── z
+|   └── index.html
+```
+#### Dist html pointing to masked libs (base path ommitted)
+```html
+<html>
+	<head>
+        <title>gulpCssMaskVendors</title>
+        <link rel="stylesheet" type="text/css" href="libs/472821985/sheet/472821985.css">
+        <link rel="stylesheet" type="text/css" href="libs/324623775/css/324623775.css">
+        <link rel="stylesheet" type="text/css" href="libs/377532462/377532462.css">
+        <link href="https://fonts.googleapis.com/css?family=Julius+Sans+One|Enriqueta" rel="stylesheet">
+    </head>
+	<body></body>
+</html>
+```
 ## License
 MIT
